@@ -1,0 +1,53 @@
+compound_components:
+  version: '0.4'
+  classes:
+  - name: fp_divide
+    attributes:
+      technology: "must_specify"
+      div_width: "must_specify"
+      sub_width: "must_specify"
+      global_cycle_seconds: "must_specify"
+
+    subcomponents:
+    - name: init_appr_lut
+      class: aladdin_register
+      attributes:
+        depth: 1  # the LUT holds 256 values
+        width: div_width
+        datawidth: div_width
+
+    - name: mult_B
+      class: aladdin_multiplier
+      attributes:
+        width_a: div_width
+        width_b: div_width
+
+    - name: mult_A
+      class: aladdin_multiplier
+      attributes:
+        width_a: div_width
+        width_b: div_width
+
+    - name: subtractor
+      class: aladdin_adder
+      attributes:
+        width: sub_width
+
+    actions:
+    - name: compute
+      subcomponents:
+      - name: init_appr_lut
+        actions:
+        - name: read   # provides x_n
+
+      - name: mult_B
+        actions:
+        - name: read   # performs B * x_n
+
+      - name: subtractor
+        actions:
+        - name: read   # computes 2 - (B * x_n)
+
+      - name: mult_A
+        actions:
+        - name: read   # computes x_n * result from subtractor

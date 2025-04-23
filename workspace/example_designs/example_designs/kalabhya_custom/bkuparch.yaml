@@ -1,0 +1,73 @@
+architecture:
+  # ============================================================
+  # Architecture Description
+  # ============================================================
+  version: 0.4
+  nodes: # Top-level is hierarchical
+  - !Container # Top-level system
+    name: system
+
+  - !Component # DRAM main memory
+    name: DRAM
+    class: DRAM
+    attributes:
+      type: "LPDDR4"
+      width: 64
+      depth: 65536
+      datawidth: 16
+
+  - !Container # OS accelerator
+    name: simple_ws
+    attributes:
+      technology: "45nm"
+
+  - !Container
+    name: PE
+    spatial: {meshX: 1, meshY: 64}
+    constraints:
+      spatial: {permutation: [K], split: 1, factors: [K=64]}
+
+  - !Parallel
+    nodes:
+    - !Component
+      name: a_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [A]}
+        temporal: {factors: [K=1]}
+
+    - !Component
+      name: b_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [B]}
+        temporal: {factors: [K=1]}
+
+    - !Component
+      name: z_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Z]}
+        temporal: {factors: [K=1]}
+
+  - !Component
+    name: mac
+    class: intmac
+    attributes:
+      multiplier_width: 16
+      adder_width: 32

@@ -1,0 +1,89 @@
+architecture:
+  # ============================================================
+  # Architecture Description
+  # ============================================================
+  version: 0.4
+  nodes: # Top-level is hierarchical
+
+  - !Container # Top-level system
+    name: system
+
+  - !Component # DRAM main memory
+    name: DRAM
+    class: DRAM
+    attributes:
+      type: "LPDDR4"
+      width: 64
+      depth: 65536
+      datawidth: 16
+
+  - !Container # OS accelerator
+    name: simple_ws
+    attributes:
+      technology: "45nm"
+
+  - !Component
+    name: Exp_LUT
+    class: storage
+    subclass: aladdin_register
+    attributes:
+      depth: 256  # the LUT holds 256 values
+      width: 32   # 16bit for index and 16 bit for the value
+      datawidth: 16 
+
+  - !Container
+    name: PE_X
+    spatial: {meshX: 32}
+    constraints:
+      spatial: {permutation: [B], split: 1, factors: [B=32]}
+
+
+  - !Container
+    name: PE_Y
+    spatial: {meshY: 32}
+    constraints:
+      spatial: {permutation: [N], split: 0, factors: [N=32]}
+
+  - !Parallel
+    nodes:
+    - !Component
+      name: Input_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Input]}
+
+    - !Component
+      name: Sum_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Sum]}
+
+
+    - !Component
+      name: Exp_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Output]}
+
+  - !Component
+    name: exp
+    class: intmac
+    attributes:
+      multiplier_width: 16
+      adder_width: 32
+

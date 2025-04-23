@@ -1,0 +1,78 @@
+architecture:
+  # ============================================================
+  # Architecture Description
+  # ============================================================
+  version: 0.4
+  nodes: # Top-level is hierarchical
+
+  - !Container # Top-level system
+    name: system
+
+  - !Component # DRAM main memory
+    name: DRAM
+    class: DRAM
+    attributes:
+      type: "LPDDR4"
+      width: 64
+      depth: 65536
+      datawidth: 16
+
+  - !Container # OS accelerator
+    name: simple_ws
+    attributes:
+      technology: "45nm" 
+
+  - !Container
+    name: PE_X
+    spatial: {meshX: 1}
+    constraints:
+      spatial: {permutation: [B], split: 1, factors: [B=1]}
+
+  - !Container
+    name: PE_Y
+    spatial: {meshY: 1}
+    constraints:
+      spatial: {permutation: [N], split: 0, factors: [N=1]}
+
+  - !Parallel
+    nodes:
+    - !Component
+      name: Input_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Input]}
+
+    - !Component
+      name: Sum_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Sum]}
+
+
+    - !Component
+      name: Exp_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Output]}
+
+  - !Component
+    name: div_comp
+    class: fp_divide
+    attributes:
+      div_width: 16
+      sub_width: 16

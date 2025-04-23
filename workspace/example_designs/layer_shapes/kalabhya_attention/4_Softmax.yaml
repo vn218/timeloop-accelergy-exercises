@@ -1,0 +1,21 @@
+problem:  #single headed attention unit for Batch Size = 1
+  version: 0.4
+  instance:
+    B: 128
+    N: 256 # Seq Len
+ 
+  shape:
+    name: Softmax
+    dimensions:
+    - B
+    - N
+    data_spaces:
+    - name: Input   # (QK_t)/root(d)
+      projection:
+      - - - B
+      - - - N
+    - name: Output   # exp(Input)
+      projection:
+      - - - B
+      - - - N
+      read_write: true

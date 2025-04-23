@@ -13,6 +13,7 @@ architecture:
     attributes:
       type: "LPDDR4"
       width: 64
+      depth: 65536
       datawidth: 16
 
   - !Container # OS accelerator

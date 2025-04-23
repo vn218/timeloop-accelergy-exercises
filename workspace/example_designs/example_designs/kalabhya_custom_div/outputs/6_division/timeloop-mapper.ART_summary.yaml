@@ -1,0 +1,26 @@
+ART_summary:
+    version: '0.4'
+    table_summary:
+      - name: system_top_level.DRAM[1..1]
+        area: 0.0
+        primitive_estimations: CactiDRAM
+      - name: system_top_level.Input_reg[1..1]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.Sum_reg[1..1]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.Exp_reg[1..1]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.div_comp[1..1]
+        area: 5927.6
+        primitive_estimations:
+          - name: init_appr_lut
+            estimator: Library
+          - name: mult_B
+            estimator: Library
+          - name: mult_A
+            estimator: Library
+          - name: subtractor
+            estimator: Library

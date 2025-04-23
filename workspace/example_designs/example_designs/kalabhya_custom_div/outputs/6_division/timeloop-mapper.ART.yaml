@@ -1,0 +1,13 @@
+ART:
+    version: '0.4'
+    tables:
+      - name: system_top_level.DRAM[1..1]
+        area: 0.0
+      - name: system_top_level.Input_reg[1..1]
+        area: 166.336
+      - name: system_top_level.Sum_reg[1..1]
+        area: 166.336
+      - name: system_top_level.Exp_reg[1..1]
+        area: 166.336
+      - name: system_top_level.div_comp[1..1]
+        area: 5927.6

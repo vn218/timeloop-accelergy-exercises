@@ -1,0 +1,63 @@
+problem:  #single headed attention unit for Batch Size = 1
+  version: 0.4
+  instance:
+    N: 128 # Seq Len
+    D: 512 # Embedding dimension 
+
+  shape:
+    name: gemm_ABZ
+    dimensions:
+    - N
+    - D   
+    data_spaces:
+    - name: X   # Input embeddings
+      projection:
+      - - - N
+      - - - D
+    - name: W_q   # query weight
+      projection:
+      - - - D
+      - - - D
+    - name: Q   # Query
+      projection:
+      - - - N
+      - - - D
+      read_write: true
+    - name: W_k   # key weight
+      projection:
+      - - - D
+      - - - D
+    - name: K   # Key 
+      projection:
+      - - - N
+      - - - D
+      read_write: true
+    - name: Z   # Z = Q * K_T
+      projection:
+      - - - N
+      - - - N
+      read_write: true
+    - name: Z_c   # Z_c = Z/c  (c=constant)
+      projection:
+      - - - N
+      - - - N
+      read_write: true
+    - name: S   # S = softmax(Z_c)
+      projection:
+      - - - N
+      - - - N
+      read_write: true
+    - name: W_v   # Value weight
+      projection:
+      - - - D
+      - - - D
+    - name: V   # Value
+      projection:
+      - - - N
+      - - - D
+      read_write: true
+    - name: R   # Result  = S * V
+      projection:
+      - - - N
+      - - - D
+      read_write: true

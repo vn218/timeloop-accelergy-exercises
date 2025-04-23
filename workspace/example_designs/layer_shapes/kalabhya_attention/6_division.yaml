@@ -1,0 +1,25 @@
+problem:  #single headed attention unit for Batch Size = 1
+  version: 0.4
+  instance:
+    B: 1
+    N: 1 # Seq Len
+ 
+  shape:
+    name: Softmax
+    dimensions:
+    - B
+    - N
+    data_spaces:
+    - name: Input   # exp(S)
+      projection:
+      - - - B
+      - - - N
+    - name: Sum
+      projection:
+      - - - B
+      - - - N
+    - name: Output   # Output = Input/Sum
+      projection:
+      - - - B
+      - - - N
+      read_write: true

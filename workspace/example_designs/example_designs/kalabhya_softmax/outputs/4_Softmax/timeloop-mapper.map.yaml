@@ -1,0 +1,59 @@
+mapping:
+  - target: E
+    type: datatype
+    keep:
+      - Output
+    bypass:
+      - Input
+  - target: Input
+    type: datatype
+    keep:
+      - Input
+    bypass:
+      - Output
+  - target: inter_PE_spatial
+    type: datatype
+    keep:
+      []
+    bypass:
+      - Input
+      - Output
+  - target: Exp_LUT
+    type: datatype
+    keep:
+      []
+    bypass:
+      - Input
+      - Output
+  - target: DRAM
+    type: datatype
+    keep:
+      - Input
+      - Output
+    bypass:
+      []
+  - target: E
+    type: temporal
+    factors: B1 N1
+    permutation: BN
+  - target: Input
+    type: temporal
+    factors: B1 N1
+    permutation: BN
+  - target: inter_PE_spatial
+    type: spatial
+    factors: B32 N32
+    permutation: BN
+    split: 1
+  - target: inter_PE_spatial
+    type: temporal
+    factors: B1 N1
+    permutation: BN
+  - target: Exp_LUT
+    type: temporal
+    factors: B1 N2
+    permutation: NB
+  - target: DRAM
+    type: temporal
+    factors: B4 N4
+    permutation: NB

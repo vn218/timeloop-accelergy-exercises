@@ -1,0 +1,63 @@
+mapping:
+  - target: z_reg
+    type: datatype
+    keep:
+      - Z
+    bypass:
+      - A
+      - B
+  - target: b_reg
+    type: datatype
+    keep:
+      - B
+    bypass:
+      - A
+      - Z
+  - target: a_reg
+    type: datatype
+    keep:
+      - A
+    bypass:
+      - B
+      - Z
+  - target: inter_PE_spatial
+    type: datatype
+    keep:
+      []
+    bypass:
+      - A
+      - B
+      - Z
+  - target: DRAM
+    type: datatype
+    keep:
+      - A
+      - B
+      - Z
+    bypass:
+      []
+  - target: z_reg
+    type: temporal
+    factors: M4 N2 K1
+    permutation: MNK
+  - target: b_reg
+    type: temporal
+    factors: M1 N1 K1
+    permutation: MNK
+  - target: a_reg
+    type: temporal
+    factors: M1 N1 K1
+    permutation: MNK
+  - target: inter_PE_spatial
+    type: spatial
+    factors: M8 N8 K1
+    permutation: MNK
+    split: 0
+  - target: inter_PE_spatial
+    type: temporal
+    factors: M1 N1 K1
+    permutation: MNK
+  - target: DRAM
+    type: temporal
+    factors: M2 N4 K64
+    permutation: KNM

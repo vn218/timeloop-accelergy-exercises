@@ -1,0 +1,18 @@
+DRAM [ Input:32768 (32768) Output:32768 (32768) ] 
+-------------------------------------------------
+| for B in [0:4)
+|   for N in [0:4)
+
+Exp_LUT [ ] 
+-----------
+|     for N in [0:2)
+
+inter_PE_spatial [ ] 
+--------------------
+|       for N in [0:32) (Spatial-Y)
+|         for B in [0:32) (Spatial-X)
+
+Input [ Input:1 (1) ] 
+E [ Output:1 (1) ] 
+------------------
+|           << Compute >>

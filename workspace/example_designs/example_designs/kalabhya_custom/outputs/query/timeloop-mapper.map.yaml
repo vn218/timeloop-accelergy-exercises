@@ -1,0 +1,63 @@
+mapping:
+  - target: wk_reg
+    type: datatype
+    keep:
+      - Output
+    bypass:
+      - Input
+      - Weight
+  - target: W
+    type: datatype
+    keep:
+      - Weight
+    bypass:
+      - Input
+      - Output
+  - target: X
+    type: datatype
+    keep:
+      - Input
+    bypass:
+      - Weight
+      - Output
+  - target: inter_PE_spatial
+    type: datatype
+    keep:
+      []
+    bypass:
+      - Input
+      - Weight
+      - Output
+  - target: DRAM
+    type: datatype
+    keep:
+      - Input
+      - Weight
+      - Output
+    bypass:
+      []
+  - target: wk_reg
+    type: temporal
+    factors: N1 D1
+    permutation: ND
+  - target: W
+    type: temporal
+    factors: N1 D1
+    permutation: ND
+  - target: X
+    type: temporal
+    factors: N1 D1
+    permutation: ND
+  - target: inter_PE_spatial
+    type: spatial
+    factors: N32 D1
+    permutation: ND
+    split: 0
+  - target: inter_PE_spatial
+    type: temporal
+    factors: N1 D1
+    permutation: ND
+  - target: DRAM
+    type: temporal
+    factors: N4 D128
+    permutation: DN

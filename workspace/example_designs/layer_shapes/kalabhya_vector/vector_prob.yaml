@@ -1,0 +1,21 @@
+problem:
+  version: 0.4
+  instance:
+    K: 64
+
+  shape:
+    name: vectorMul_K
+    dimensions:
+    - K   
+    data_spaces:
+    - name: A
+      projection:
+      - - - K
+    - name: B
+      projection:
+      - - - K
+    - name: Z
+      projection:
+      - - - K
+      read_write: true
+
