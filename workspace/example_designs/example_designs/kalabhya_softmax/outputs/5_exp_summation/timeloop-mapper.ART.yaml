@@ -5,8 +5,6 @@ ART:
         area: 0.0
       - name: system_top_level.Exp_LUT[1..1]
         area: 5952.97
-      - name: system_top_level.init_appr_LUT[1..1]
-        area: 1288.72
       - name: system_top_level.inter_PE_X_spatial[1..1]
         area: 1.0
       - name: system_top_level.Input_reg[1..1024]

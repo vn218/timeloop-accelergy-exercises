@@ -24,25 +24,33 @@ architecture:
 
   - !Component
     name: Exp_LUT
-    class: storage
-    subclass: aladdin_register
+    class: SRAM
     attributes:
-      depth: 256  # the LUT holds 256 values
+      depth: 128  # the LUT holds 256 values
       width: 32   # 16bit for index and 16 bit for the value
-      datawidth: 16 
+      n_rw_ports: 2
+      datawidth: 16
+    constraints:
+      dataspace: {bypass: [Input, Output]}
+
+  - !Component
+    name: init_appr_LUT
+    class: SRAM
+    attributes:
+      depth: 64  # the LUT holds 256 values
+      width: 32   # 16bit for index and 16 bit for the value
+      n_rw_ports: 1
+      datawidth: 16
+    constraints:
+      dataspace: {bypass: [Input, Output]}
+
 
   - !Container
     name: PE_X
-    spatial: {meshX: 32}
+    spatial: {meshX: 32, meshY: 32}
     constraints:
-      spatial: {permutation: [B], split: 1, factors: [B=32]}
+      spatial: {permutation: [B, N], split: 1, factors: [B=32, N=32]}
 
-
-  - !Container
-    name: PE_Y
-    spatial: {meshY: 32}
-    constraints:
-      spatial: {permutation: [N], split: 0, factors: [N=32]}
 
   - !Parallel
     nodes:
@@ -66,7 +74,7 @@ architecture:
         width: 16
         datawidth: 16
       constraints:
-        dataspace: {keep: [Sum]}
+        dataspace: {bypass: [Input, Output]}
 
 
     - !Component

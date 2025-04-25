@@ -1,17 +1,12 @@
 #error Tenssella does not support bypass.
 #error Tenssella does not support bypass.
-t6
-B 1 N 2 
-N
-#error Tenssella does not support bypass.
-#error Tenssella does not support bypass.
 t5
 B 4 N 4 
 NB
 #error Tenssella does not support bypass.
 #error Tenssella does not support bypass.
 t4
-B 1 N 1 
+B 1 N 2 
 N
 #error Tenssella does not support bypass.
 t3

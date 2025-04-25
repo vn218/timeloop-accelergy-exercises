@@ -20,7 +20,7 @@ mapping:
     bypass:
       - Sum
       - Output
-  - target: inter_PE_Y_spatial
+  - target: inter_PE_X_spatial
     type: datatype
     keep:
       []
@@ -28,7 +28,7 @@ mapping:
       - Input
       - Sum
       - Output
-  - target: inter_PE_X_spatial
+  - target: init_appr_LUT
     type: datatype
     keep:
       []
@@ -39,10 +39,9 @@ mapping:
   - target: Exp_LUT
     type: datatype
     keep:
-      []
+      - Sum
     bypass:
       - Input
-      - Sum
       - Output
   - target: DRAM
     type: datatype
@@ -64,29 +63,24 @@ mapping:
     type: temporal
     factors: B1 N1
     permutation: BN
-  - target: inter_PE_Y_spatial
-    type: spatial
-    factors: B1 N32
-    permutation: NB
-    split: 0
-  - target: inter_PE_Y_spatial
-    type: temporal
-    factors: B1 N1
-    permutation: BN
   - target: inter_PE_X_spatial
     type: spatial
-    factors: B32 N1
+    factors: B12 N12
     permutation: BN
     split: 1
   - target: inter_PE_X_spatial
     type: temporal
     factors: B1 N1
     permutation: BN
+  - target: init_appr_LUT
+    type: temporal
+    factors: B1 N1
+    permutation: BN
   - target: Exp_LUT
     type: temporal
-    factors: B2 N8
-    permutation: NB
+    factors: B1 N1
+    permutation: BN
   - target: DRAM
     type: temporal
-    factors: B2 N1
-    permutation: BN
+    factors: B11 N22
+    permutation: NB

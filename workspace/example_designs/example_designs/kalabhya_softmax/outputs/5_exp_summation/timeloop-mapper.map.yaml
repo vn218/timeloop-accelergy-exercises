@@ -25,13 +25,6 @@ mapping:
     bypass:
       - Input
       - Output
-  - target: init_appr_LUT
-    type: datatype
-    keep:
-      []
-    bypass:
-      - Input
-      - Output
   - target: Exp_LUT
     type: datatype
     keep:
@@ -67,15 +60,11 @@ mapping:
     type: temporal
     factors: B1 N1
     permutation: BN
-  - target: init_appr_LUT
-    type: temporal
-    factors: B1 N1
-    permutation: BN
   - target: Exp_LUT
     type: temporal
-    factors: B4 N4
+    factors: B1 N2
     permutation: NB
   - target: DRAM
     type: temporal
-    factors: B1 N2
+    factors: B4 N4
     permutation: NB

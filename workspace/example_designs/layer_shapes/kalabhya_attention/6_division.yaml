@@ -1,11 +1,11 @@
-problem:  #single headed attention unit for Batch Size = 1
+problem:
   version: 0.4
   instance:
-    B: 1
-    N: 1 # Seq Len
+    B: 128
+    N: 256 # Seq Len
  
   shape:
-    name: Softmax
+    name: division
     dimensions:
     - B
     - N
@@ -15,7 +15,7 @@ problem:  #single headed attention unit for Batch Size = 1
       - - - B
       - - - N
     - name: Sum
-      projection:
+      projection: # extrapolated to match Input
       - - - B
       - - - N
     - name: Output   # Output = Input/Sum

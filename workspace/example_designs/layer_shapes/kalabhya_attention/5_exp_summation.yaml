@@ -1,11 +1,11 @@
-problem:  #single headed attention unit for Batch Size = 1
+problem:
   version: 0.4
   instance:
     B: 128
     N: 256 # Seq Len
  
   shape:
-    name: Softmax
+    name: exp_summation
     dimensions:
     - B
     - N
