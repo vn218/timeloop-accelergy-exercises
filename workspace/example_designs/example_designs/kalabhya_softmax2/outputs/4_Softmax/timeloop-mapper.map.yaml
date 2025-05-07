@@ -5,11 +5,10 @@ mapping:
       - Output
     bypass:
       - Input
-      - Sum
   - target: Sum_reg
     type: datatype
     keep:
-      - Sum
+      []
     bypass:
       - Input
       - Output
@@ -18,7 +17,6 @@ mapping:
     keep:
       - Input
     bypass:
-      - Sum
       - Output
   - target: inter_PE_X_spatial
     type: datatype
@@ -26,7 +24,6 @@ mapping:
       []
     bypass:
       - Input
-      - Sum
       - Output
   - target: init_appr_LUT
     type: datatype
@@ -34,12 +31,11 @@ mapping:
       []
     bypass:
       - Input
-      - Sum
       - Output
   - target: Exp_LUT
     type: datatype
     keep:
-      - Sum
+      []
     bypass:
       - Input
       - Output
@@ -47,7 +43,6 @@ mapping:
     type: datatype
     keep:
       - Input
-      - Sum
       - Output
     bypass:
       []
@@ -65,7 +60,7 @@ mapping:
     permutation: BN
   - target: inter_PE_X_spatial
     type: spatial
-    factors: B12 N12
+    factors: B32 N32
     permutation: BN
     split: 1
   - target: inter_PE_X_spatial
@@ -78,9 +73,9 @@ mapping:
     permutation: BN
   - target: Exp_LUT
     type: temporal
-    factors: B1 N1
-    permutation: BN
+    factors: B4 N4
+    permutation: NB
   - target: DRAM
     type: temporal
-    factors: B11 N22
+    factors: B1 N2
     permutation: NB

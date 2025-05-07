@@ -3,90 +3,92 @@ ERT_summary:
     table_summary:
       - name: system_top_level.DRAM[1..1]
         actions:
+          - name: update
+            energy: 512.0
           - name: write
             energy: 512.0
           - name: read
             energy: 512.0
           - name: leak
             energy: 0.0
-          - name: update
-            energy: 512.0
         primitive_estimation(s):
           - name: system_top_level.DRAM[1..1]
             estimator: CactiDRAM
       - name: system_top_level.Exp_LUT[1..1]
         actions:
+          - name: update
+            energy: 2.14592
           - name: write
             energy: 2.14592
           - name: read
             energy: 1.56553
           - name: leak
             energy: 2.82164e-05
-          - name: update
-            energy: 2.14592
         primitive_estimation(s):
           - name: system_top_level.Exp_LUT[1..1]
             estimator: CactiSRAM
       - name: system_top_level.init_appr_LUT[1..1]
         actions:
+          - name: update
+            energy: 0.795402
           - name: write
             energy: 0.795402
           - name: read
             energy: 0.542902
           - name: leak
             energy: 1.18916e-05
-          - name: update
-            energy: 0.795402
         primitive_estimation(s):
           - name: system_top_level.init_appr_LUT[1..1]
             estimator: CactiSRAM
       - name: system_top_level.Input_reg[1..1024]
         actions:
+          - name: update
+            energy: 0.0
           - name: write
             energy: 0.0
           - name: read
             energy: 0.182195
           - name: leak
-            energy: 0.0
-          - name: update
             energy: 0.0
         primitive_estimation(s):
           - name: system_top_level.Input_reg[1..1024]
             estimator: Library
       - name: system_top_level.Sum_reg[1..1024]
         actions:
+          - name: update
+            energy: 0.0
           - name: write
             energy: 0.0
           - name: read
             energy: 0.182195
           - name: leak
-            energy: 0.0
-          - name: update
             energy: 0.0
         primitive_estimation(s):
           - name: system_top_level.Sum_reg[1..1024]
             estimator: Library
       - name: system_top_level.Exp_reg[1..1024]
         actions:
+          - name: update
+            energy: 0.0
           - name: write
             energy: 0.0
           - name: read
             energy: 0.182195
           - name: leak
             energy: 0.0
-          - name: update
-            energy: 0.0
         primitive_estimation(s):
           - name: system_top_level.Exp_reg[1..1024]
             estimator: Library
-      - name: system_top_level.exp[1..1024]
+      - name: system_top_level.divide[1..1024]
         actions:
           - name: compute
-            energy: 4.27651
-          - name: leak
-            energy: 0.0283414
+            energy: 32.7166
         primitive_estimation(s):
-          - name: intadder
+          - name: init_appr_lut
             estimator: Library
-          - name: intmultiplier
+          - name: mult_B
+            estimator: Library
+          - name: subtractor
+            estimator: Library
+          - name: mult_A
             estimator: Library

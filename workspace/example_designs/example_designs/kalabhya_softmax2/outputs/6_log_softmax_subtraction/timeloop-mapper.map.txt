@@ -1,0 +1,20 @@
+DRAM [ Input:32768 (32768) Sum:32768 (32768) Output:32768 (32768) ] 
+-------------------------------------------------------------------
+| for N in [0:2)
+
+Log_LUT [ ] 
+-----------
+|   for B in [0:4)
+|     for N in [0:4)
+
+inter_PE_X_spatial [ ] 
+----------------------
+|       for N in [0:32) (Spatial-Y)
+|         for B in [0:32) (Spatial-X)
+
+Exp_LUT [ ] 
+Input_reg [ Input:1 (1) ] 
+Out_reg [ Output:1 (1) ] 
+Sum_reg [ Sum:1 (1) ] 
+---------------------
+|           << Compute >>

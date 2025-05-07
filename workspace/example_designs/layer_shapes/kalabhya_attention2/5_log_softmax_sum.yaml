@@ -1,0 +1,20 @@
+problem:
+  version: 0.4
+  instance:
+    B: 128
+    N: 256 # Seq Len
+ 
+  shape:
+    name: exp_summation
+    dimensions:
+    - B
+    - N
+    data_spaces:
+    - name: Input   # exp(S)
+      projection:
+      - - - B
+      - - - N
+    - name: Output   # sum (exp(S))
+      projection:
+      - - - B
+      read_write: true

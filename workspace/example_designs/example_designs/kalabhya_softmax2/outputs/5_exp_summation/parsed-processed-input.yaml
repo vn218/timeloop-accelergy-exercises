@@ -29,9 +29,9 @@ architecture:
                 power_gated_at: null
             required_actions:
               - update
-              - leak
-              - read
               - write
+              - read
+              - leak
             enabled: true
           - name: Exp_LUT[1..1]
             class: SRAM
@@ -53,33 +53,9 @@ architecture:
                 technology: "45nm"
             required_actions:
               - update
-              - leak
-              - read
               - write
-            enabled: true
-          - name: init_appr_LUT[1..1]
-            class: SRAM
-            attributes:
-                depth: 64
-                width: 32
-                n_rw_ports: 1
-                datawidth: 16
-                has_power_gating: false
-                n_banks: 2
-                cluster_size: 1
-                reduction_supported: true
-                multiple_buffering: 1
-                min_utilization: 0
-                allow_overbooking: false
-                meshX: 1
-                meshY: 1
-                power_gated_at: null
-                technology: "45nm"
-            required_actions:
-              - update
-              - leak
               - read
-              - write
+              - leak
             enabled: true
           - name: inter_PE_X_spatial[1..1]
             class: dummy_storage
@@ -119,9 +95,9 @@ architecture:
                 technology: "45nm"
             required_actions:
               - update
-              - leak
-              - read
               - write
+              - read
+              - leak
             enabled: true
           - name: Sum_reg[1..1024]
             class: storage
@@ -143,9 +119,9 @@ architecture:
                 technology: "45nm"
             required_actions:
               - update
-              - leak
-              - read
               - write
+              - read
+              - leak
             enabled: true
           - name: Exp_reg[1..1024]
             class: storage
@@ -167,9 +143,9 @@ architecture:
                 technology: "45nm"
             required_actions:
               - update
-              - leak
-              - read
               - write
+              - read
+              - leak
             enabled: true
           - name: exp[1..1024]
             class: intmac
@@ -191,12 +167,8 @@ architecture_constraints:
           - Output
         type: bypass
         target: Exp_LUT
-      - bypass:
-          - Input
-        type: bypass
-        target: init_appr_LUT
       - type: spatial
-        factors: B=12,N=12
+        factors: B=32,N=32
         permutation: BN
         split: 1
         target: inter_PE_X_spatial
@@ -206,7 +178,6 @@ architecture_constraints:
         target: inter_PE_X_spatial
       - bypass:
           - Input
-          - Sum
           - Output
         type: bypass
         target: inter_PE_X_spatial
@@ -215,20 +186,16 @@ architecture_constraints:
         type: bypass
         bypass:
           - Output
-          - Sum
         target: Input_reg
-      - keep:
-          - Sum
-        type: bypass
-        bypass:
-          - Output
+      - bypass:
           - Input
+          - Output
+        type: bypass
         target: Sum_reg
       - keep:
           - Output
         type: bypass
         bypass:
-          - Sum
           - Input
         target: Exp_reg
 problem:
@@ -238,7 +205,7 @@ problem:
         N: 256
         densities: {}
     shape:
-        name: division
+        name: exp_summation
         dimensions:
           - B
           - N
@@ -248,15 +215,9 @@ problem:
               -   -   - B
               -   -   - N
             read_write: false
-          - name: Sum
-            projection:
-              -   -   - B
-              -   -   - N
-            read_write: false
           - name: Output
             projection:
               -   -   - B
-              -   -   - N
             read_write: true
         coefficients: []
 compound_components:

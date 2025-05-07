@@ -1,0 +1,25 @@
+problem:  #single headed attention unit for Batch Size = 1
+  version: 0.4
+  instance:
+    N: 128 # Seq Len
+    D: 128 # Embedding dimension
+
+  shape:
+    name: Query
+    dimensions:
+    - N
+    - D   
+    data_spaces:
+    - name: Input   # Input embeddings
+      projection:
+      - - - N
+      - - - D
+    - name: Weight   # query weight
+      projection:
+      - - - D
+      - - - D
+    - name: Output   # Query
+      projection:
+      - - - N
+      - - - D
+      read_write: true

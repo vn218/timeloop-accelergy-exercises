@@ -1,0 +1,30 @@
+problem:  #single headed attention unit for Batch Size = 1
+  version: 0.4
+  instance:
+    N: 128 # Seq Len
+    D: 128 # Embedding dimension
+
+  shape:
+    name: Z   # (Qk_t)/root(dk)
+    dimensions:
+    - N
+    - D   
+    data_spaces:
+    - name: Input   # Q
+      projection:
+      - - - N
+      - - - D
+    - name: Weight   # K
+      projection:
+      - - - N
+      - - - D
+    - name: Output   # QK_t
+      projection:
+      - - - N
+      - - - N
+      read_write: true
+    - name: Z    # (QK_t)/(root(dk)
+      projection:
+      - - - N
+      - - - N
+      read_write: true

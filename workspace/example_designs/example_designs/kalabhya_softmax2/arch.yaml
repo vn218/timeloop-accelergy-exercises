@@ -23,26 +23,15 @@ architecture:
       technology: "45nm"
 
   - !Component
-    name: Exp_LUT
+    name: Log_LUT
     class: SRAM
     attributes:
       depth: 128  # the LUT holds 256 values
       width: 32   # 16bit for index and 16 bit for the value
-      n_rw_ports: 2
+      n_rw_ports: 1
       datawidth: 16
     constraints:
-      dataspace: {bypass: [Input, Sum, Output]}
-
-  # - !Component
-  #   name: init_appr_LUT
-  #   class: SRAM
-  #   attributes:
-  #     depth: 64  # the LUT holds 256 values
-  #     width: 32   # 16bit for index and 16 bit for the value
-  #     n_rw_ports: 1
-  #     datawidth: 16
-  #   constraints:
-  #     dataspace: {bypass: [Input, Sum, Output]}
+      dataspace: {bypass: [Input, Output, Sum], keep: []}
 
 
   - !Container
@@ -51,6 +40,17 @@ architecture:
     constraints:
       spatial: {permutation: [B, N], split: 1, factors: [B=32, N=32]}
 
+      
+  - !Component
+    name: Exp_LUT
+    class: SRAM
+    attributes:
+      depth: 128  # the LUT holds 256 values
+      width: 32   # 16bit for index and 16 bit for the value
+      n_rw_ports: 1
+      datawidth: 16
+    constraints:
+      dataspace: {keep: [], bypass: [Output, Input, Sum]}
 
   - !Parallel
     nodes:
@@ -63,7 +63,19 @@ architecture:
         width: 16
         datawidth: 16
       constraints:
-        dataspace: {keep: [Input], bypass: [Sum, Output]}
+        dataspace: {keep: [Input], bypass: [Output, Sum]}
+
+    - !Component
+      name: Out_reg
+      class: storage
+      subclass: aladdin_register
+      attributes:
+        depth: 1
+        width: 16
+        datawidth: 16
+      constraints:
+        dataspace: {keep: [Output], bypass: [Input, Sum]}
+
 
     - !Component
       name: Sum_reg
@@ -77,32 +89,18 @@ architecture:
         dataspace: {keep: [Sum], bypass: [Input, Output]}
 
 
-    - !Component
-      name: Exp_reg
-      class: storage
-      subclass: aladdin_register
-      attributes:
-        depth: 1
-        width: 16
-        datawidth: 16
-      constraints:
-        dataspace: {keep: [Output], bypass: [Input, Sum]}
-
-  # - !Parallel
-  #   - !Component
-  #     name: exp
-  #     class: intmac
-  #     attributes:
-  #       multiplier_width: 16
-  #       adder_width: 32
-  #     constraints:
-  #       dataspace: {bypass: [Input, Sum, Output]}
-
   - !Component
-    name: divide
-    class: compute_fp_divide
+    name: exp
+    class: intmac
     attributes:
-      div_width: 32
-      sub_width: 32
+      multiplier_width: 16
+      adder_width: 32
+
+    # - !Component
+    #   name: divide
+    #   class: compute_fp_divide
+    #   attributes:
+    #     div_width: 32
+    #     sub_width: 32
 
 

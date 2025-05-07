@@ -1,7 +1,7 @@
 compound_components:
   version: '0.4'
   classes:
-  - name: compute_softmax
+  - name: compute_fp_divide
     attributes:
       technology: "must_specify"
       div_width: "must_specify"

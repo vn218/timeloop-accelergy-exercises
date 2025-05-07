@@ -3,6 +3,11 @@ ERT:
     tables:
       - name: system_top_level.DRAM[1..1]
         actions:
+          - name: update
+            arguments:
+                global_cycle_seconds: 1e-09
+                action_latency_cycles: 1
+            energy: 512.0
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -18,13 +23,13 @@ ERT:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 0.0
+      - name: system_top_level.Exp_LUT[1..1]
+        actions:
           - name: update
             arguments:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
-            energy: 512.0
-      - name: system_top_level.Exp_LUT[1..1]
-        actions:
+            energy: 2.14592
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -40,13 +45,13 @@ ERT:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 2.82164e-05
+      - name: system_top_level.init_appr_LUT[1..1]
+        actions:
           - name: update
             arguments:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
-            energy: 2.14592
-      - name: system_top_level.init_appr_LUT[1..1]
-        actions:
+            energy: 0.795402
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -62,13 +67,13 @@ ERT:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 1.18916e-05
+      - name: system_top_level.Input_reg[1..1024]
+        actions:
           - name: update
             arguments:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
-            energy: 0.795402
-      - name: system_top_level.Input_reg[1..1024]
-        actions:
+            energy: 0.0
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -80,17 +85,17 @@ ERT:
                 action_latency_cycles: 1
             energy: 0.182195
           - name: leak
-            arguments:
-                global_cycle_seconds: 1e-09
-                action_latency_cycles: 1
-            energy: 0.0
-          - name: update
             arguments:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 0.0
       - name: system_top_level.Sum_reg[1..1024]
         actions:
+          - name: update
+            arguments:
+                global_cycle_seconds: 1e-09
+                action_latency_cycles: 1
+            energy: 0.0
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -102,17 +107,17 @@ ERT:
                 action_latency_cycles: 1
             energy: 0.182195
           - name: leak
-            arguments:
-                global_cycle_seconds: 1e-09
-                action_latency_cycles: 1
-            energy: 0.0
-          - name: update
             arguments:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 0.0
       - name: system_top_level.Exp_reg[1..1024]
         actions:
+          - name: update
+            arguments:
+                global_cycle_seconds: 1e-09
+                action_latency_cycles: 1
+            energy: 0.0
           - name: write
             arguments:
                 global_cycle_seconds: 1e-09
@@ -128,16 +133,8 @@ ERT:
                 global_cycle_seconds: 1e-09
                 action_latency_cycles: 1
             energy: 0.0
-          - name: update
-            arguments:
-                global_cycle_seconds: 1e-09
-                action_latency_cycles: 1
-            energy: 0.0
-      - name: system_top_level.exp[1..1024]
+      - name: system_top_level.divide[1..1024]
         actions:
           - name: compute
             arguments: {}
-            energy: 4.27651
-          - name: leak
-            arguments: {}
-            energy: 0.0283414
+            energy: 32.7166

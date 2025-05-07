@@ -25,48 +25,17 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
-          - write
           - read
-          - leak
+          - write
           - update
+          - leak
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
-      - name: system_top_level.Exp_LUT[1..1]
+      - name: system_top_level.Log_LUT[1..1]
         class: SRAM
         attributes:
             depth: 128
-            width: 32
-            n_rw_ports: 2
-            datawidth: 16
-            has_power_gating: false
-            n_banks: 2
-            cluster_size: 1
-            reduction_supported: true
-            multiple_buffering: 1
-            min_utilization: 0
-            allow_overbooking: false
-            meshX: 1
-            meshY: 1
-            power_gated_at: null
-            technology: "45nm"
-            version: '0.4'
-            global_cycle_seconds: 1e-09
-            action_latency_cycles: 1
-            cycle_seconds: 1e-09
-            n_instances: 1
-        required_actions:
-          - write
-          - read
-          - leak
-          - update
-        enabled: true
-        area_scale: 1.0
-        energy_scale: 1.0
-      - name: system_top_level.init_appr_LUT[1..1]
-        class: SRAM
-        attributes:
-            depth: 64
             width: 32
             n_rw_ports: 1
             datawidth: 16
@@ -87,10 +56,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
-          - write
           - read
-          - leak
+          - write
           - update
+          - leak
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -119,6 +88,37 @@ architecture:
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
+      - name: system_top_level.Exp_LUT[1..1024]
+        class: SRAM
+        attributes:
+            depth: 128
+            width: 32
+            n_rw_ports: 1
+            datawidth: 16
+            has_power_gating: false
+            n_banks: 2
+            cluster_size: 1
+            reduction_supported: true
+            multiple_buffering: 1
+            min_utilization: 0
+            allow_overbooking: false
+            meshX: 32
+            meshY: 32
+            power_gated_at: null
+            technology: "45nm"
+            version: '0.4'
+            global_cycle_seconds: 1e-09
+            action_latency_cycles: 1
+            cycle_seconds: 1e-09
+            n_instances: 1
+        required_actions:
+          - read
+          - write
+          - update
+          - leak
+        enabled: true
+        area_scale: 1.0
+        energy_scale: 1.0
       - name: system_top_level.Input_reg[1..1024]
         class: storage
         subclass: aladdin_register
@@ -143,10 +143,41 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
-          - write
           - read
-          - leak
+          - write
           - update
+          - leak
+        enabled: true
+        area_scale: 1.0
+        energy_scale: 1.0
+      - name: system_top_level.Out_reg[1..1024]
+        class: storage
+        subclass: aladdin_register
+        attributes:
+            depth: 1
+            width: 16
+            datawidth: 16
+            has_power_gating: false
+            n_banks: 2
+            cluster_size: 1
+            reduction_supported: true
+            multiple_buffering: 1
+            min_utilization: 0
+            allow_overbooking: false
+            meshX: 32
+            meshY: 32
+            power_gated_at: null
+            technology: "45nm"
+            version: '0.4'
+            global_cycle_seconds: 1e-09
+            action_latency_cycles: 1
+            cycle_seconds: 1e-09
+            n_instances: 1
+        required_actions:
+          - read
+          - write
+          - update
+          - leak
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -174,41 +205,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
-          - write
           - read
-          - leak
-          - update
-        enabled: true
-        area_scale: 1.0
-        energy_scale: 1.0
-      - name: system_top_level.Exp_reg[1..1024]
-        class: storage
-        subclass: aladdin_register
-        attributes:
-            depth: 1
-            width: 16
-            datawidth: 16
-            has_power_gating: false
-            n_banks: 2
-            cluster_size: 1
-            reduction_supported: true
-            multiple_buffering: 1
-            min_utilization: 0
-            allow_overbooking: false
-            meshX: 32
-            meshY: 32
-            power_gated_at: null
-            technology: "45nm"
-            version: '0.4'
-            global_cycle_seconds: 1e-09
-            action_latency_cycles: 1
-            cycle_seconds: 1e-09
-            n_instances: 1
-        required_actions:
           - write
-          - read
-          - leak
           - update
+          - leak
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0

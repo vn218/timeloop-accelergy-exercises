@@ -25,10 +25,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -56,10 +56,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -87,10 +87,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -143,10 +143,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -174,10 +174,10 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
@@ -205,18 +205,18 @@ architecture:
             cycle_seconds: 1e-09
             n_instances: 1
         required_actions:
+          - update
           - write
           - read
           - leak
-          - update
         enabled: true
         area_scale: 1.0
         energy_scale: 1.0
-      - name: system_top_level.exp[1..1024]
-        class: intmac
+      - name: system_top_level.divide[1..1024]
+        class: fp_divide
         attributes:
-            multiplier_width: 16
-            adder_width: 32
+            div_width: 32
+            sub_width: 32
             has_power_gating: false
             meshX: 32
             meshY: 32

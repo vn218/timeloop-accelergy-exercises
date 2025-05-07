@@ -1,0 +1,28 @@
+ART_summary:
+    version: '0.4'
+    table_summary:
+      - name: system_top_level.DRAM[1..1]
+        area: 0.0
+        primitive_estimations: CactiDRAM
+      - name: system_top_level.Exp_LUT[1..1]
+        area: 5952.97
+        primitive_estimations: CactiSRAM
+      - name: system_top_level.inter_PE_X_spatial[1..1]
+        area: 1.0
+        primitive_estimations: dummy
+      - name: system_top_level.Input_reg[1..1024]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.Sum_reg[1..1024]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.Exp_reg[1..1024]
+        area: 166.336
+        primitive_estimations: Library
+      - name: system_top_level.exp[1..1024]
+        area: 3243.1
+        primitive_estimations:
+          - name: intadder
+            estimator: Library
+          - name: intmultiplier
+            estimator: Library

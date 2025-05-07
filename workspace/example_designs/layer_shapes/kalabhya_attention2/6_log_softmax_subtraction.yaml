@@ -1,0 +1,25 @@
+problem:
+  version: 0.4
+  instance:
+    B: 128
+    N: 256 # Seq Len
+ 
+  shape:
+    name: division
+    dimensions:
+    - B
+    - N
+    data_spaces:
+    - name: Input   # exp(S)
+      projection:
+      - - - B
+      - - - N
+    - name: Sum
+      projection: # extrapolated to match Input
+      - - - B
+      - - - N
+    - name: Output   # Output = Input/Sum
+      projection:
+      - - - B
+      - - - N
+      read_write: true

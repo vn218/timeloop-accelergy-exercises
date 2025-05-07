@@ -28,39 +28,15 @@ architecture:
                 meshY: 1
                 power_gated_at: null
             required_actions:
-              - write
               - read
-              - leak
+              - write
               - update
+              - leak
             enabled: true
-          - name: Exp_LUT[1..1]
+          - name: Log_LUT[1..1]
             class: SRAM
             attributes:
                 depth: 128
-                width: 32
-                n_rw_ports: 2
-                datawidth: 16
-                has_power_gating: false
-                n_banks: 2
-                cluster_size: 1
-                reduction_supported: true
-                multiple_buffering: 1
-                min_utilization: 0
-                allow_overbooking: false
-                meshX: 1
-                meshY: 1
-                power_gated_at: null
-                technology: "45nm"
-            required_actions:
-              - write
-              - read
-              - leak
-              - update
-            enabled: true
-          - name: init_appr_LUT[1..1]
-            class: SRAM
-            attributes:
-                depth: 64
                 width: 32
                 n_rw_ports: 1
                 datawidth: 16
@@ -76,10 +52,10 @@ architecture:
                 power_gated_at: null
                 technology: "45nm"
             required_actions:
-              - write
               - read
-              - leak
+              - write
               - update
+              - leak
             enabled: true
           - name: inter_PE_X_spatial[1..1]
             class: dummy_storage
@@ -98,6 +74,30 @@ architecture:
                 meshX: 1
                 meshY: 1
                 power_gated_at: null
+            enabled: true
+          - name: Exp_LUT[1..1024]
+            class: SRAM
+            attributes:
+                depth: 128
+                width: 32
+                n_rw_ports: 1
+                datawidth: 16
+                has_power_gating: false
+                n_banks: 2
+                cluster_size: 1
+                reduction_supported: true
+                multiple_buffering: 1
+                min_utilization: 0
+                allow_overbooking: false
+                meshX: 32
+                meshY: 32
+                power_gated_at: null
+                technology: "45nm"
+            required_actions:
+              - read
+              - write
+              - update
+              - leak
             enabled: true
           - name: Input_reg[1..1024]
             class: storage
@@ -118,10 +118,34 @@ architecture:
                 power_gated_at: null
                 technology: "45nm"
             required_actions:
-              - write
               - read
-              - leak
+              - write
               - update
+              - leak
+            enabled: true
+          - name: Out_reg[1..1024]
+            class: storage
+            subclass: aladdin_register
+            attributes:
+                depth: 1
+                width: 16
+                datawidth: 16
+                has_power_gating: false
+                n_banks: 2
+                cluster_size: 1
+                reduction_supported: true
+                multiple_buffering: 1
+                min_utilization: 0
+                allow_overbooking: false
+                meshX: 32
+                meshY: 32
+                power_gated_at: null
+                technology: "45nm"
+            required_actions:
+              - read
+              - write
+              - update
+              - leak
             enabled: true
           - name: Sum_reg[1..1024]
             class: storage
@@ -142,34 +166,10 @@ architecture:
                 power_gated_at: null
                 technology: "45nm"
             required_actions:
-              - write
               - read
-              - leak
-              - update
-            enabled: true
-          - name: Exp_reg[1..1024]
-            class: storage
-            subclass: aladdin_register
-            attributes:
-                depth: 1
-                width: 16
-                datawidth: 16
-                has_power_gating: false
-                n_banks: 2
-                cluster_size: 1
-                reduction_supported: true
-                multiple_buffering: 1
-                min_utilization: 0
-                allow_overbooking: false
-                meshX: 32
-                meshY: 32
-                power_gated_at: null
-                technology: "45nm"
-            required_actions:
               - write
-              - read
-              - leak
               - update
+              - leak
             enabled: true
           - name: exp[1..1024]
             class: intmac
@@ -189,13 +189,9 @@ architecture_constraints:
       - bypass:
           - Input
           - Output
+          - Sum
         type: bypass
-        target: Exp_LUT
-      - bypass:
-          - Input
-          - Output
-        type: bypass
-        target: init_appr_LUT
+        target: Log_LUT
       - type: spatial
         factors: B=32,N=32
         permutation: BN
@@ -207,26 +203,37 @@ architecture_constraints:
         target: inter_PE_X_spatial
       - bypass:
           - Input
+          - Sum
           - Output
         type: bypass
         target: inter_PE_X_spatial
+      - bypass:
+          - Output
+          - Input
+          - Sum
+        type: bypass
+        target: Exp_LUT
       - keep:
           - Input
-        type: bypass
         bypass:
           - Output
+          - Sum
+        type: bypass
         target: Input_reg
-      - bypass:
+      - keep:
+          - Output
+        bypass:
+          - Input
+          - Sum
+        type: bypass
+        target: Out_reg
+      - keep:
+          - Sum
+        bypass:
           - Input
           - Output
         type: bypass
         target: Sum_reg
-      - keep:
-          - Output
-        type: bypass
-        bypass:
-          - Input
-        target: Exp_reg
 problem:
     version: '0.4'
     instance:
@@ -234,12 +241,17 @@ problem:
         N: 256
         densities: {}
     shape:
-        name: exp
+        name: division
         dimensions:
           - B
           - N
         data_spaces:
           - name: Input
+            projection:
+              -   -   - B
+              -   -   - N
+            read_write: false
+          - name: Sum
             projection:
               -   -   - B
               -   -   - N
@@ -253,7 +265,7 @@ problem:
 compound_components:
     version: '0.4'
     classes:
-      - name: fp_divide
+      - name: compute_softmax
         attributes:
             technology: "must_specify"
             div_width: "must_specify"
@@ -665,6 +677,48 @@ compound_components:
               - name: metadata_counters[0]
                 actions:
                   - name: add
+      - name: compute_fp_divide
+        attributes:
+            technology: "must_specify"
+            div_width: "must_specify"
+            sub_width: "must_specify"
+            global_cycle_seconds: "must_specify"
+        subcomponents:
+          - name: init_appr_lut
+            class: aladdin_register
+            attributes:
+                depth: 1
+                width: div_width
+                datawidth: div_width
+          - name: mult_B
+            class: aladdin_multiplier
+            attributes:
+                width_a: div_width
+                width_b: div_width
+          - name: mult_A
+            class: aladdin_multiplier
+            attributes:
+                width_a: div_width
+                width_b: div_width
+          - name: subtractor
+            class: aladdin_adder
+            attributes:
+                width: sub_width
+        actions:
+          - name: compute
+            subcomponents:
+              - name: init_appr_lut
+                actions:
+                  - name: read
+              - name: mult_B
+                actions:
+                  - name: read
+              - name: subtractor
+                actions:
+                  - name: read
+              - name: mult_A
+                actions:
+                  - name: read
 mapping: []
 mapper:
     optimization_metrics:
