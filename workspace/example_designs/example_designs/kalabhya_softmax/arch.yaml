@@ -100,7 +100,7 @@ architecture:
 
   - !Component
     name: divide
-    class: compute_fp_divide
+    class: compute_divide
     attributes:
       div_width: 32
       sub_width: 32

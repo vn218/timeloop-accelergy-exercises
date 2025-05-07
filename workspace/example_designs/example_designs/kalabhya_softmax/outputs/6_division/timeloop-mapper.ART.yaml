@@ -1,0 +1,17 @@
+ART:
+    version: '0.4'
+    tables:
+      - name: system_top_level.DRAM[1..1]
+        area: 0.0
+      - name: system_top_level.Exp_LUT[1..1]
+        area: 5952.97
+      - name: system_top_level.inter_PE_X_spatial[1..1]
+        area: 1.0
+      - name: system_top_level.Input_reg[1..1024]
+        area: 166.336
+      - name: system_top_level.Sum_reg[1..1024]
+        area: 166.336
+      - name: system_top_level.Exp_reg[1..1024]
+        area: 166.336
+      - name: system_top_level.divide[1..1024]
+        area: 22894.4
